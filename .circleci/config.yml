@@ -4,4 +4,13 @@ orbs:
 workflows:
   node-tests:
     jobs:
-      - node/test
+      build:
+        steps:
+          - checkout
+          - run: yarn install
+          - save_cache:
+              paths:
+                - node_modules
+              key: v1-dependencies-{{ checksum "package.json"}}
+          - run: yarn test
+      
